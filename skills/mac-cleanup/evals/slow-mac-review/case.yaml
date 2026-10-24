@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: slow-mac-review
+expected_outcome: |
+  A read-only audit followed by a plain-English report: current free space, why it is slow,
+  biggest space users with sizes, startup and background items, overlapping or unused apps,
+  and a recommendation split into safe-now, needs-approval and keep. Nothing is deleted.

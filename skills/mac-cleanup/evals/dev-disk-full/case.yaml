@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: dev-disk-full
+expected_outcome: |
+  A read-only audit focused on developer space: package caches, stale node_modules,
+  AI-agent worktrees checked for unsaved work, editor caches. Report says what regenerates,
+  flags worktrees with uncommitted changes as keep, and asks before deleting. Nothing is deleted.

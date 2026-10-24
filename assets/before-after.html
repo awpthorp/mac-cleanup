@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mac cleanup: before and after</title>
+<style>
+  :root {
+    --bg: #0e1013; --card: #16191e; --line: #252a31; --text: #e9ecef; --muted: #8b939c;
+    --mess: #ff7a6b; --good: #4fd18b; --accent: #c9d1d9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1200px; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    padding: 56px 56px 44px; -webkit-font-smoothing: antialiased;
+  }
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+  h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  h1 span { color: var(--muted); font-weight: 500; }
+  .hero { text-align: right; }
+  .hero .big { font-size: 64px; font-weight: 800; color: var(--good); letter-spacing: -0.03em; line-height: 1; }
+  .hero .sub { font-size: 17px; color: var(--muted); margin-top: 6px; }
+  .hero .sub b { color: var(--text); font-weight: 600; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card);
+          border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  th { text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+       color: var(--muted); font-weight: 600; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  td { padding: 15px 20px; font-size: 16.5px; line-height: 1.35; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.area { font-weight: 600; width: 21%; }
+  td.before { color: var(--mess); width: 30%; }
+  td.after { width: 27%; color: var(--accent); }
+  td.benefit { color: var(--good); font-weight: 600; width: 22%; }
+  td small { display: block; color: var(--muted); font-weight: 400; font-size: 14px; margin-top: 2px; }
+  footer { display: flex; justify-content: space-between; margin-top: 22px; font-size: 15px; color: var(--muted); }
+  footer b { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>I asked Claude Code to review my Mac.<br><span>Here is what it found.</span></h1>
+    <div class="hero">
+      <div class="big">+255 GB</div>
+      <div class="sub">175 GB free <b>&rarr; 430 GB free</b></div>
+    </div>
+  </header>
+
+  <table>
+    <thead><tr><th>Area</th><th>Before: the mess</th><th>After</th><th>Benefit</th></tr></thead>
+    <tbody>
+      <tr><td class="area">Downloads</td><td class="before">93 GB of old zips, duplicate videos and file transfers</td><td class="after">Empty</td><td class="benefit">93 GB back</td></tr>
+      <tr><td class="area">AI coding worktrees</td><td class="before">~70 GB of forgotten repo copies left by coding agents</td><td class="after">3 kept (unsaved work), the rest removed</td><td class="benefit">~70 GB<small>zero work lost</small></td></tr>
+      <tr><td class="area">Games</td><td class="before">5 installed, 4 not played in months</td><td class="after">Kept the one I actually play</td><td class="benefit">61 GB</td></tr>
+      <tr><td class="area">Caches</td><td class="before">Browser, Spotify, npm, Python, editor caches</td><td class="after">Cleared, they rebuild on demand</td><td class="benefit">~50 GB<small>nothing lost</small></td></tr>
+      <tr><td class="area">node_modules</td><td class="before">39 copies in projects untouched for 60+ days</td><td class="after">Removed, <code>npm install</code> restores them</td><td class="benefit">8.8 GB</td></tr>
+      <tr><td class="area">Overlapping AI apps</td><td class="before">12 AI apps and browsers, each with its own updater</td><td class="after">7 uninstalled</td><td class="benefit">Fewer background updaters</td></tr>
+      <tr><td class="area">Old app versions</td><td class="before">Two years of Illustrator installed side by side</td><td class="after">Both removed</td><td class="benefit">5.5 GB</td></tr>
+      <tr><td class="area">Startup items</td><td class="before">Office updaters with no Office installed, a forgotten FTP server, 3 auto-launch apps</td><td class="after">13 removed</td><td class="benefit">Quieter, faster boot</td></tr>
+      <tr><td class="area">Stuck print job</td><td class="before">A 6-page print from June, still retrying 4 months later</td><td class="after">Cancelled</td><td class="benefit">Hidden process gone</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <div>Nothing deleted without my OK. Backups, tunnels and dev tools kept.</div>
+    <div>Free skill: <b>github.com/awpthorp/mac-cleanup</b></div>
+  </footer>
+</body>
+</html>

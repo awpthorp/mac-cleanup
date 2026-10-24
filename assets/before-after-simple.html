@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mac cleanup: before and after</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 900px; background: #0e1013; color: #e9ecef; padding: 52px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 28px; }
+  table { width: 100%; border-collapse: collapse; background: #16191e; border-radius: 16px; overflow: hidden; }
+  th { text-align: left; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+       color: #8b939c; font-weight: 600; padding: 18px 24px; }
+  td { padding: 18px 24px; font-size: 21px; border-top: 1px solid #252a31; }
+  td:first-child { font-weight: 600; }
+  td.b { color: #ff7a6b; }
+  td.a { color: #4fd18b; font-weight: 600; }
+  tr.total td { font-size: 26px; font-weight: 800; background: #1b2026; }
+  footer { margin-top: 20px; font-size: 15px; color: #8b939c; }
+</style>
+</head>
+<body>
+  <h1>My Mac, before and after Claude Code</h1>
+  <table>
+    <tr><th></th><th>Before</th><th>After</th></tr>
+    <tr class="total"><td>Free space</td><td class="b">175 GB</td><td class="a">430 GB</td></tr>
+    <tr><td>Downloads</td><td class="b">93 GB</td><td class="a">0</td></tr>
+    <tr><td>Old AI agent files</td><td class="b">70 GB</td><td class="a">2 GB</td></tr>
+    <tr><td>Unplayed games</td><td class="b">61 GB</td><td class="a">0</td></tr>
+    <tr><td>Caches</td><td class="b">50 GB</td><td class="a">Cleared</td></tr>
+    <tr><td>Unused apps</td><td class="b">9</td><td class="a">0</td></tr>
+    <tr><td>Startup junk</td><td class="b">13 items</td><td class="a">0</td></tr>
+  </table>
+  <footer>Nothing deleted without my OK &middot; github.com/awpthorp/mac-cleanup</footer>
+</body>
+</html>

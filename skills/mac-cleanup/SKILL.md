@@ -11,6 +11,9 @@ The user is often not technical. Many items on a Mac have cryptic names (`mds_st
 
 ## Ground rules
 
+Run ad-hoc shell loops with `bash`, not zsh: zsh aborts a whole command when a glob matches nothing, which silently skips work. macOS has no `timeout` command either.
+
+
 These exist because cleanup mistakes are permanent and the user trusts you with their machine.
 
 - **Audit first, change nothing.** The audit phase is read-only. Do not delete, unload, quit or "quickly tidy" anything until the user has seen the report and said yes.
@@ -19,6 +22,8 @@ These exist because cleanup mistakes are permanent and the user trusts you with 
 - **Prefer the tool's own cleanup command** (`npm cache clean --force`, `brew cleanup`, `docker system prune`, `xcrun simctl delete unavailable`, `uv cache clean`, `pip cache purge`, an app's own uninstaller) over `rm -rf`, because they know what is safe to drop.
 - **Measure, do not guess.** Record free space with `df -h /System/Volumes/Data` before you start, after each batch and at the end. Report real numbers. `du` sizes can add up to more than the space actually freed (shared or cloned files), so the `df` difference is the true total. `df` does not count "purgeable" space, so Finder may show a bigger number; mention this if the user compares.
 - **Things that look like junk but often are not:** backups (restic, Time Machine, Arq, Carbon Copy, rsync scripts), tunnels and servers (cloudflared, Tailscale, ngrok, sshd), container VMs (Docker, Colima, OrbStack), sync clients (iCloud, Dropbox, Google Drive), password managers, VPNs, hardware toolchains (PlatformIO, Arduino). Explain them and default to keeping them unless the user says otherwise.
+- **Keep secrets out of the conversation.** Launch agent plists, tunnel configs (cloudflared, ngrok), `.env` files and app configs often contain tokens. Read only the keys you need (`PlistBuddy -c 'Print :ProgramArguments:0'`), never dump whole files, and never paste a token into the report.
+- **Check the user's own jobs actually work.** If a backup or sync script has a log or status file, read the last result. A job that keeps failing re-runs at every login and burns CPU, and a silently failing backup is worth more to the user than any amount of freed space.
 - **Never touch** `/System`, `/usr` (except `/usr/local`), anything SIP-protected, other users' home folders, or the contents of `~/Library/Keychains`, `~/Library/Mail` (the mail store itself), `~/Library/Messages`, and the insides of Photos, Music, iMovie, Final Cut or Lightroom libraries and virtual machine bundles.
 - **Prefer the Trash for the user's own files.** `trash <path>` (built into macOS 15+) is undoable; `rm -rf` is not. Use `rm` for caches and rebuildable folders, or when the user explicitly chooses permanent deletion.
 - **Do not empty the Trash or delete iCloud Drive / cloud-synced files** (`~/Library/Mobile Documents`, `~/Library/CloudStorage`) without asking specifically, since deleting a synced file deletes it everywhere.
@@ -32,7 +37,7 @@ These exist because cleanup mistakes are permanent and the user trusts you with 
    Use `--quick` if the user only cares about speed and startup, not space.
 3. While it runs, tell the user macOS may show prompts: folder access for Desktop, Documents, Downloads or Photos, and "wants to control System Events" (used only to read login items). Allowing them lets the audit see everything; declining just leaves gaps.
 4. Run the two helpers too, if relevant:
-   - `bash <skill-dir>/scripts/check-worktrees.sh [folders]` (AI coding agents like Codex, Cursor, Claude Code and Grok leave full repo copies behind). It checks the common agent folders by default; Claude Code keeps worktrees inside each repo at `<repo>/.claude/worktrees`, so pass those too. Only SAFE entries may be removed: KEEP means uncommitted or new files, stashes, or commits that exist nowhere else.
+   - `bash <skill-dir>/scripts/check-worktrees.sh` (AI coding agents like Codex, Cursor, Claude Code and Grok leave full repo copies behind). With no arguments it checks the common agent folders and every `<repo>/.claude/worktrees` under the home folder. Only SAFE entries may be removed: KEEP means uncommitted or new files, `.env`-style files that exist only in that checkout, stashes, or commits that exist nowhere else. Also skip anything modified in the last day or two (it may be open in another session), and if the user's repos are on GitHub, check `gh pr list --head <branch> --state all` and keep worktrees whose PR is still open.
    - `bash <skill-dir>/scripts/stale-node-modules.sh 60` (JavaScript dependency folders in projects untouched for 60 days)
 5. Look for build output in projects (`.next`, `.turbo`, `.nuxt`, Rust `target`): these are often bigger than node_modules and always rebuild. See the catalog for the find command.
 6. Dig into anything big that the audit cannot explain. `du -sh <folder>/* | sort -rh | head` is the usual next step.
